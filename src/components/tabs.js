@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const Tabs = (topics) => {
   // TASK 3
   // ---------------------
@@ -13,7 +14,18 @@ const Tabs = (topics) => {
   //   <div class="tab">technology</div>
   // </div>
   //
+  const topic = document.createElement('div');
+  topic.classList.add('topics')
+  topics.forEach(element => {
+    const newTopic = document.createElement('div');
+    newTopic.classList.add('tab');
+    newTopic.textContent = element;
+    topic.appendChild(newTopic);
+
+  });
+  return topic
 }
+import axios from "axios";
 
 const tabsAppender = (selector) => {
   // TASK 4
@@ -23,6 +35,15 @@ const tabsAppender = (selector) => {
   // Find the array of topics inside the response, and create the tabs using the Tabs component.
   // Append the tabs to the element in the DOM that matches the selector passed to the function.
   //
-}
+  const tabsContainer = document.querySelector(selector);
+
+  axios.get(`http://localhost:5000/api/topics`)
+    .then(response => {
+        const newTab = Tabs(response.data.topics);
+        tabsContainer.appendChild(newTab)
+    }).catch(error => {
+      console.error(error);
+    })
+  }
 
 export { Tabs, tabsAppender }
