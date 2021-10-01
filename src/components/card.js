@@ -60,7 +60,6 @@ const cardAppender = (selector) => {
   .then(response => {
     const newObj = response.data.articles
     Object.values(newObj).forEach(section => {
-      console.log(section)
       section.forEach(element => {
         const newCard = Card(element);
         document.querySelector(selector).appendChild(newCard)
